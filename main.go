@@ -28,6 +28,7 @@ func main() {
 			bookApi.POST("/del", app.BookDeleted)
 			//修改图书
 			//新增图书
+			bookApi.POST("/add", app.BookAdd)
 		}
 	}
 	router.Run(":3000")
