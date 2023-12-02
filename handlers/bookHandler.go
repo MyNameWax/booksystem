@@ -1,4 +1,4 @@
-package controller
+package handlers
 
 import (
 	"github.com/gin-gonic/gin"
@@ -74,5 +74,40 @@ func BookDeleted(context *gin.Context) {
 	}
 }
 func BookAdd(context *gin.Context) {
-	//TODO 测试哦哦哦2323
+	var books = Books{}
+	if err := context.ShouldBindJSON(&books); err != nil {
+		context.JSON(200, gin.H{
+			"code": 400,
+			"msg":  "请求参数错误",
+		})
+		return
+	}
+	bookName := books.BookName
+	//查询数据库 图书是否存在
+	var book = Books{}
+	result := db.Where("book_name =?", bookName).First(&book)
+	if result.RowsAffected == 0 {
+		//不存在 新增
+		result := db.Create(&books)
+		if result.RowsAffected != 0 {
+			context.JSON(200, gin.H{
+				"code":    200,
+				"message": "添加成功",
+			})
+			return
+		} else {
+			context.JSON(200, gin.H{
+				"code":    3002,
+				"message": "添加失败,参数错误",
+			})
+		}
+	} else {
+		//存在 异常
+		context.JSON(200, gin.H{
+			"code":    3001,
+			"message": "图书已存在",
+		})
+		return
+
+	}
 }

@@ -1,9 +1,9 @@
-package controller
+package handlers
 
 import (
 	"net/http"
-	dbUtil "student_backend/util"
-	jwtUtil "student_backend/util"
+	dbUtil "student_backend/utils"
+	jwtUtil "student_backend/utils"
 
 	"github.com/gin-gonic/gin"
 )

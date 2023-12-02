@@ -1,8 +1,8 @@
-package config
+package middleware
 
 import (
 	"fmt"
-	jwtUtil "student_backend/util"
+	jwtUtil "student_backend/utils"
 
 	"github.com/gin-gonic/gin"
 )

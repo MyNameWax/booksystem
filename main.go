@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	jwt "student_backend/config"
-	app "student_backend/controller"
+	"student_backend/handlers"
+	jwt "student_backend/middleware"
 )
 
 func main() {
@@ -13,22 +13,21 @@ func main() {
 		userApi := StudentAPI.Group("/user")
 		{
 			//用户注册
-			userApi.POST("/register", app.UserRegister)
+			userApi.POST("/register", handlers.UserRegister)
 			//用户登录
-			userApi.POST("/login", app.UserLogin)
+			userApi.POST("/login", handlers.UserLogin)
 			//根据ID查询用户信息 根据传进来的JWT获取用户信息 需要解析
 		}
 		bookApi := StudentAPI.Group("/book").Use(jwt.AuthInterceptor())
 		{
 			//获取全部图书
-			bookApi.GET("/", app.BookList)
+			bookApi.GET("/", handlers.BookList)
 			//根据图书名字获取具体图书信息
-			bookApi.POST("/", app.BookDetail)
+			bookApi.POST("/", handlers.BookDetail)
 			//删除图书
-			bookApi.POST("/del", app.BookDeleted)
-			//修改图书
+			bookApi.POST("/del", handlers.BookDeleted)
 			//新增图书
-			bookApi.POST("/add", app.BookAdd)
+			bookApi.POST("/add", handlers.BookAdd)
 		}
 	}
 	router.Run(":3000")
