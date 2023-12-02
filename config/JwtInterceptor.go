@@ -15,20 +15,21 @@ func AuthInterceptor() gin.HandlerFunc {
 		if token == "" {
 			ctx.JSON(401, gin.H{
 				"code":    401,
-				"message": "未登录",
+				"message": "未登录,请先登录",
 			})
-			ctx.Set("error", "error")
+			ctx.Abort()
 			return
 		}
-		result := jwtUtil.ParseJwt(token)
-		if result == "" {
+		result, _ := jwtUtil.ParseJwt(token)
+		if result == nil {
 			ctx.JSON(401, gin.H{
 				"code":    401,
-				"message": "身份验证失败,请重新登录",
+				"message": "未登录,请先登录",
 			})
-			ctx.Set("error", "error")
+			ctx.Abort()
 			return
 		}
+		fmt.Println("登录的用户:", result.Name)
 		ctx.Next()
 	}
 }

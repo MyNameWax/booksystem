@@ -39,7 +39,7 @@ func BookDetail(context *gin.Context) {
 			"code":    3001,
 			"message": "书籍不存在",
 		})
-
+		return
 	}
 	// 3. 脱敏 返回数据
 	books.Id = 00000
@@ -61,6 +61,7 @@ func BookDeleted(context *gin.Context) {
 			"code":    3001,
 			"message": "图书不存在",
 		})
+		return
 	}
 	// 3.存在 删除
 	resultDeleted := db.Where("book_name = ?", bookName).Delete(&books)
@@ -70,6 +71,5 @@ func BookDeleted(context *gin.Context) {
 			"code":    200,
 			"message": "删除成功",
 		})
-
 	}
 }

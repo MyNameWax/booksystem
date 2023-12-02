@@ -1,9 +1,9 @@
 package main
 
 import (
-	app "student_backend/controller"
-
 	"github.com/gin-gonic/gin"
+	jwt "student_backend/config"
+	app "student_backend/controller"
 )
 
 func main() {
@@ -18,7 +18,7 @@ func main() {
 			userApi.POST("/login", app.UserLogin)
 			//根据ID查询用户信息 根据传进来的JWT获取用户信息 需要解析
 		}
-		bookApi := StudentAPI.Group("/book")
+		bookApi := StudentAPI.Group("/book").Use(jwt.AuthInterceptor())
 		{
 			//获取全部图书
 			bookApi.GET("/", app.BookList)

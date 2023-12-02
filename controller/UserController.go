@@ -39,7 +39,7 @@ func UserLogin(context *gin.Context) {
 	}
 	//密码不返回给前端
 	user.Password = ""
-	token := jwtUtil.CreateJwt(user.Name)
+	token, _ := jwtUtil.CreateJwt(user.Name)
 	var UserDTO = UsersDTO{
 		Name:  user.Name,
 		Token: token,
