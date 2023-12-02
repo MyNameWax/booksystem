@@ -6,6 +6,7 @@ import (
 	jwt "student_backend/middleware"
 )
 
+// 启动
 func main() {
 	router := gin.Default()
 	StudentAPI := router.Group("/api/v1")
